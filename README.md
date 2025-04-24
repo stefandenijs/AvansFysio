@@ -1,2 +1,2 @@
 # AvansFysio
-Azure DevOps code from the Serverside Frameworks project for Avans Hogeschool Informatica
+Azure DevOps code from the server-side Frameworks project for Avans Hogeschool Informatica year 2 (2022)
