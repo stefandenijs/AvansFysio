@@ -1,0 +1,108 @@
+﻿@model AvansFysio.Models.Patients.PatientsViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 pl-0 pr-2">
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-sm-4 pl-0 pr-3">
+                        <img alt="Foto patiënt" src="@Model.ImageSource" class="patient-photo" />
+                    </div>
+                    <div class="col-sm-8">
+                        <h2>Algemeen</h2>
+                        <div class="row">
+                            <div class="col-sm-6 p-0">
+                                <p class="m-0"><strong>Naam:</strong></p>
+                                <p>@Model.Name</p>
+                                <p class="m-0"><strong>Geboortedatum:</strong></p>
+                                <p>@Model.BirthDate.ToShortDateString()</p>
+                                <p class="m-0"><strong>Geslacht:</strong></p>
+                                <p>@Model.Gender</p>
+                                <p class="m-0"><strong>Email:</strong></p>
+                                <p>@Model.Email</p>
+                            </div>
+                            <div class="col-sm-6 p-0">
+                                <p class="m-0"><strong>Telefoonnummer:</strong></p>
+                                <p>@Model.PhoneNumber</p>
+                                <p class="m-0"><strong>Rol:</strong></p>
+                                <p>@Model.Role</p>
+                                <p class="m-0"><strong>Identificatienummer:</strong></p>
+                                <p>@Model.IdentificationNumber</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-6 pl-2 pr-0">
+            <div class="content-block">
+                <h2>Mijn volgende afspraak</h2>
+                <vc:next-appointment person-id="@Model.PatientId">
+                </vc:next-appointment>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-6 pr-2 pl-0">
+            <div class="content-block">
+                <div class="row">
+                    <h2>Mijn Afspraken</h2>
+                    <a asp-action="AppointmentPatientForm" asp-controller="Appointment" asp-route-id="@Model.PatientId" class="btn btn-primary ml-auto">Maak afspraak</a>
+                </div>
+                <div class="custom-view">
+                    <vc:appointments person-id="@Model.PatientId">
+                    </vc:appointments>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 pl-2 pr-0">
+            <div class="content-block">
+                <h2>Behandelinformatie</h2>
+                @if (@Model.PatientRecord == null)
+                {
+                    <p>Geen behandelinformatie gevonden.</p>
+                }
+                else
+                {
+                    <div class="row no-gutters">
+                        <div class="col-sm-4">
+                            <p class="m-0"><strong>Hoofdbehandelaar:</strong></p>
+                            <p>@Model.PatientRecord.HeadPractitioner</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p class="m-0"><strong>Intakebehandelaar:</strong></p>
+                            <p>@Model.PatientRecord.IntakeHandler</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p class="m-0"><strong>Onder supervisie van:</strong></p>
+                            <p>@Model.PatientRecord.IntakeSupervisor</p>
+                        </div>
+                    </div>
+                    <div class="row no-gutters mt-2">
+                        <div class="col-sm-6">
+                            <p class="m-0"><strong>Datum van aanmelding:</strong></p>
+                            <p>@($"{Model.PatientRecord.DateOfRegistration:dd-MM-yyyy}")</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="m-0"><strong>Datum van afmelding:</strong></p>
+                            <p>@($"{Model.PatientRecord.DateOfDismissal:dd-MM-yyyy}")</p>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="m-0"><strong>Diagnose:</strong></p>
+                        <p>@($"{Model.PatientRecord.DiagnosticCode} - {Model.PatientRecord.DiagnoseDescription}")</p>
+                    </div>
+                    <div class="mt-2">
+                        <p class="m-0"><strong>Omschijving klachten:</strong></p>
+                        <p>@Model.PatientRecord.MedicalComplaintsDescription</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

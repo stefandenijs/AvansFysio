@@ -1,0 +1,25 @@
+﻿@model AvansFysio.Models.Treatments.TreatmentsViewModel
+
+<div class="view-row">
+    <div class="row no-gutters">
+        <div class="col-sm-4">
+            <p><strong>Uitgevoerd op:</strong></p>
+            <p>@($"{Model.PerformedOn:dd-MM-yyyy}")</p>
+        </div>
+        <div class="col-sm-4">
+            <p><strong>Patient:</strong></p>
+            <p>@Model.Patient</p>
+        </div>
+        <div class="col-sm-4">
+            <p><strong>Ruimte:</strong></p>
+            <p>@Model.Room</p>
+        </div>
+    </div>
+    <div>
+        <p><strong>Behandeling:</strong></p>
+        <p>@($"{Model.Code} - {Model.Description}")</p>
+    </div>
+    <div>
+        <a class="btn btn-primary" asp-action="Details" asp-controller="Patient" asp-route-id="@Model.PatientId">Patiënt details</a>
+    </div>
+</div>

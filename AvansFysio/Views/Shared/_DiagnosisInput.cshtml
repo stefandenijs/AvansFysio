@@ -1,0 +1,8 @@
+﻿@model AvansFysio.Models.Patients.NewPatientRecordsViewModel
+
+<div id="Diagnosis" class="form-group">
+    <label asp-for="DiagnoseId">Diagnose*:</label><br />
+    <span asp-validation-for="DiagnoseId"></span>
+    <select id="DiagnosisSelect" asp-for="DiagnoseId" asp-items="ViewBag.Diagnoses" onchange="CheckDiagnosis(this.value)" class="form-control input-validation-error" placeholder="Diagnosecode"></select>
+    <p id="DiagnosisInfo" class="val-error-text">* Diagnosecode en beschrijving moeten gekozen worden.</p>
+</div>

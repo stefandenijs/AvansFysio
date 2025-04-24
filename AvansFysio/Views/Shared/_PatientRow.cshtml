@@ -1,0 +1,10 @@
+﻿@model AvansFysio.Models.Patients.PatientsViewModel
+
+<tr>
+    <td>@Model.PatientId</td>
+    <td>@Model.Name <a asp-controller="Patient" asp-action="Details" asp-route-id="@Model.PatientId">(details)</a></td>
+    <td>@($"{Model.BirthDate:dd-MM-yyyy}")</td>
+    <td>@Model.Email</td>
+    <td>@Model.Role</td>
+    <td>@Model.IdentificationNumber</td>
+</tr>

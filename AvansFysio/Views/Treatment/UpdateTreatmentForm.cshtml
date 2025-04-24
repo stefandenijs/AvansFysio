@@ -1,0 +1,44 @@
+﻿@model AvansFysio.Models.Treatments.UpdateTreatmentsViewModel
+
+@{
+    ViewData["Title"] = "Wijzig behandelingsformulier";
+}
+
+<div class="container-fluid">
+    <form asp-action="TreatmentForm" asp-controller="Treatment" method="post" class="content-block mx-auto col-sm-auto">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PatientId" />
+        <input type="hidden" asp-for="TreatmentId" />
+        <p>Een wijziging mag alleen doorgevoerd worden als dit op dezelfde dag is als hij is aan gemaakt.</p>
+        <div class="form-group">
+            <label asp-for="TreatmentInfoId">Behandeling:</label><br />
+            <span asp-validation-for="TreatmentInfoId"></span>
+            <select asp-for="TreatmentInfoId" asp-items="ViewBag.Treatments" class="form-control" placeholder="Behandeling"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomId">Behandelruimte:</label><br />
+            <span asp-validation-for="RoomId"></span>
+            <select asp-for="RoomId" asp-items="ViewBag.Rooms" class="form-control" placeholder="Behandelruimte"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Particularities">Bijzonderheden*:</label><br />
+            <span asp-validation-for="Particularities"></span>
+            <textarea asp-for="Particularities" type="a" class="form-control" placeholder="Bijzonderheden"></textarea>
+            <p>* Bij sommige behandelingen is een toelichting van bijzonderheden verplicht.</p>
+        </div>
+        <div class="form-group">
+            <label asp-for="TreatmentPerformedById">Behandelaar:</label><br />
+            <span asp-validation-for="TreatmentPerformedById"></span>
+            <select asp-for="TreatmentPerformedById" asp-items="ViewBag.Workers" class="form-control" placeholder="Behandelaar"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="TreatmentPerformedDate">Behandeling uitgevoerd op:</label><br />
+            <span asp-validation-for="TreatmentPerformedDate"></span>
+            <input asp-for="TreatmentPerformedDate" type="date" asp-format="0:dd-MM-yyyy" value="@Model.TreatmentPerformedDate.Value.ToString("yyyy-MM-dd")" class="form-control" placeholder="Behandeling uitgevoerd op" />
+        </div>
+
+        <div class="form-group row">
+            <button class="btn btn-primary ml-auto" asp-route-id="@Model.PatientId">Voeg behandeling toe</button>
+        </div>
+    </form>
+</div>

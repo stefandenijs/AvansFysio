@@ -1,0 +1,30 @@
+﻿@model AvansFysio.Models.Appointments.AppointmentsViewModel
+
+<div class="row mb-3 appointment">
+    <div class="col-sm-2 p-0">
+        <p><strong>Datum:</strong></p>
+            <p>@Model.StartTime.ToShortDateString()</p>
+    </div>
+    <div class="col-sm-3 p-0 pl-2">
+        <p><strong>Tijd:</strong></p>
+        <p>@($"{Model.StartTime.ToShortTimeString()}-{Model.EndTime.ToShortTimeString()}")</p>
+    </div>
+    <div class="col-sm-3 pl-2 pr-0">
+        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+        {
+            <p><strong>Patiënt:</strong></p>
+            <p>@Model.Patient</p>
+        }
+        else
+        {
+            <p><strong>Behandelaar:</strong></p>
+            <p>@Model.Practitioner</p>
+        }
+    </div>
+    <div class="col-sm-4 pr-0">
+        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+        {
+            <a class="btn btn-primary small-btn" asp-action="Details" asp-controller="Patient" asp-route-id="@Model.PatientId">Patiënt Details</a>
+        }
+    </div>
+</div>

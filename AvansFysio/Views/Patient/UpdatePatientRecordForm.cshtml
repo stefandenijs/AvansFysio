@@ -1,0 +1,71 @@
+﻿@model AvansFysio.Models.Patients.UpdatePatientRecordsViewModel
+
+@{
+    ViewData["Title"] = "Patiëntendossier wijzigen";
+}
+
+<div class="container-fluid">
+    <form asp-action="UpdatePatientRecordForm" asp-controller="Patient" method="post" class="content-block mx-auto col-sm-10">
+        <h2>Gegevens</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PatientId" />
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label asp-for="ProblemDescription">Klachten omschrijving:</label><br />
+                    <span asp-validation-for="ProblemDescription"></span>
+                    <textarea asp-for="ProblemDescription" type="a" class="form-control" placeholder="Omschrijving klachten"></textarea>
+                </div>
+                <div id="BodyLocalization" class="form-group">
+                    <label asp-for="BodyLocalization">Lichaamslocatie:</label><br />
+                    <span asp-validation-for="BodyLocalization"></span>
+                    <select asp-for="BodyLocalization" asp-items="ViewBag.BodyLocalizations" onchange="CheckBodyLocalization(this.value, '@Url.Action("CheckBodyLocalization")')" class="form-control" placeholder="Lichaamslocatie"></select>
+                </div>
+            </div>
+            <div id="Workers" class="col-sm-4">
+                <div id="IntakeHandler" class="form-group">
+                    <label asp-for="IntakeHandlerId">Intakebehandelaar:</label><br />
+                    <span asp-validation-for="IntakeHandlerId"></span>
+                    <select asp-for="IntakeHandlerId" asp-items="@ViewBag.Workers" onchange="CheckWorker(this.value, '@Url.Action("CheckWorker")', @Model.IntakeSupervisorId)" class="form-control" placeholder="Intakebehandelaar"></select>
+                </div>
+                <div id="HeadPractitioner" class="form-group">
+                    <label asp-for="HeadPractitionerId">Hoofdbehandelaar:</label><br />
+                    <span asp-validation-for="HeadPractitionerId"></span>
+                    <select asp-for="HeadPractitionerId" asp-items="@ViewBag.Physiotherapists" class="form-control" placeholder="Hoofdbehandelaar"></select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label asp-for="DateOfRegistration">Datum van aanmelding:</label><br />
+                    <span asp-validation-for="DateOfRegistration"></span>
+                    <input asp-for="DateOfRegistration" type="date" asp-format="0:dd-MM-yyyy" value="@Model.DateOfRegistration.Value.ToString("yyyy-MM-dd")" class="form-control" placeholder="Datum van aanmelding" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateOfDismissal">Datum van afmelding:</label><br />
+                    <span asp-validation-for="DateOfDismissal"></span>
+                    <input asp-for="DateOfDismissal" type="date" asp-format="0:dd-MM-yyyy" value="@Model.DateOfDismissal.Value.ToString("yyyy-MM-dd")" class="form-control" placeholder="Datum van afmelding" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="SessionsPerWeek">Maximaal sessies per week:</label><br />
+                    <span asp-validation-for="SessionsPerWeek"></span>
+                    <input asp-for="SessionsPerWeek" class="form-control" placeholder="Maximaal sessies per week" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="SessionsDuration">Duratie minuten per sessie:</label><br />
+                    <span asp-validation-for="SessionsDuration"></span>
+                    <input asp-for="SessionsDuration" class="form-control" placeholder="Duratie minuten per sessie" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <button class="btn btn-primary ml-auto">Wijzig</button>
+        </div>
+    </form>
+</div>
+<script>
+    window.onload = function() {
+        CheckWorker(document.getElementById("IntakeHandlerId").value, '@Url.Action("CheckWorker")', @Model.IntakeSupervisorId);
+        CheckBodyLocalization(`@Model.BodyLocalization`, '@Url.Action("CheckBodyLocalization")', @Model.DiagnoseId);
+    }
+</script>

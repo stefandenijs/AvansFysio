@@ -1,0 +1,19 @@
+﻿@model List<AvansFysio.Models.Comments.CommentsViewModel>
+
+<div class="content-list comments">
+    @if (Model.Count == 0)
+    {
+        <p>Geen opmerkingen gevonden.</p>
+    }
+    @foreach (var comment in Model)
+    {
+        if (comment.Visible && User.HasClaim(c => c.Type == "Claim.Patient"))
+        {
+            <partial name="_CommentRow" model="comment"/>
+        }
+        else if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+        {
+            <partial name="_CommentRow" model="comment"/>
+        }
+    }
+</div>

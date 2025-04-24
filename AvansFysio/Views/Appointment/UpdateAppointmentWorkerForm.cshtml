@@ -1,0 +1,39 @@
+﻿@model AvansFysio.Models.Appointments.UpdateAppointmentsViewModel
+
+@{
+    ViewData["Title"] = "Afspraak wijzigen";
+}
+
+<div class="container-fluid">
+    <form asp-action="UpdateAppointmentPatientForm" asp-controller="Appointment" method="post" class="content-block m-auto">
+        <h2>Gegevens</h2>
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PatientId" />
+        <input type="hidden" asp-for="PractitionerId" />
+        <div class="form-group">
+            <label asp-for="PatientId">Patiënt:</label><br />
+            <span asp-validation-for="PatientId"></span>
+            <select disabled="disabled" asp-for="PatientId" asp-items="@ViewBag.Patients" class="form-control" placeholder="Patiënt"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="PractitionerId">Behandelaar:</label><br />
+            <span asp-validation-for="PractitionerId"></span>
+            <select asp-for="PractitionerId" asp-items="@ViewBag.Workers" class="form-control" placeholder="Behandelaar"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartTime">Begin tijd:</label><br />
+            <span asp-validation-for="StartTime"></span>
+            <input asp-for="StartTime" type="datetime-local" value="@Model.StartTime.Value.ToString("yyyy-MM-ddTHH:mm")" onchange="CalculateTime(this.value, '@Url.Action("CalculateTime")', @Model.PatientId)" class="form-control" placeholder="Begin tijd" />
+        </div>
+        <div class="form-group">
+            <label asp-for="EndTime">Eind tijd:</label><br />
+            <span id="info" class="text-danger"></span>
+            <input readonly="readonly" asp-for="EndTime" type="datetime-local" value="@Model.EndTime.Value.ToString("yyyy-MM-ddTHH:mm")" class="form-control" placeholder="Eind tijd" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Maak afspraak</button>
+        </div>
+    </form>
+</div>

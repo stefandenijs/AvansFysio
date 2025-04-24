@@ -1,0 +1,11 @@
+﻿@model AvansFysio.Models.Comments.CommentsViewModel
+
+<div>
+    <div class="row">
+        <p><strong>Geplaatst door: </strong> @Model.PlacedBy</p>
+        <p class="ml-auto"><strong>Geplaatst op: </strong> @($"{Model.Date:dd-MM-yyyy}")</p>
+    </div>
+    <div>
+        <p>@Model.CommentText</p>
+    </div>
+</div>

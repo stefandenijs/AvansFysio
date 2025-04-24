@@ -1,0 +1,84 @@
+﻿@model AvansFysio.Models.Availability.NewAvailabilitiesViewModel
+
+@{
+    ViewData["Title"] = "Beschikbaarheidsformulier";
+}
+
+<div class="container-fluid row">
+    <form asp-action="AvailabilityForm" asp-controller="Availability" method="post" class="content-block col-sm-auto m-auto">
+        <h2>Beschikbaarheid</h2>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row mb-3">
+            <div class="col-sm-12 p-0">
+                <label asp-for="Monday">Maandag:</label>
+                <input asp-for="Monday" class="day" onchange="CheckInputState(this)" />
+            </div>
+            <div class="col-sm-12 p-0">
+                <label asp-for="MondayStartTime">Start tijd:</label>
+                <input asp-for="MondayStartTime" asp-format="{0:HH:mm}" type="time" />
+                <label asp-for="MondayEndTime">Eind tijd:</label>
+                <input asp-for="MondayEndTime" asp-format="{0:HH:mm}" type="time" />
+            </div>
+        </div>
+        <div class="form-group row mb-3 ">
+            <div class="col-sm-12 p-0">
+                <label asp-for="Tuesday">Dinsdag:</label>
+                <input asp-for="Tuesday" class="day" onchange="CheckInputState(this)" />
+            </div>
+            <div class="col-sm-12 p-0 ">
+                <label asp-for="TuesdayStartTime">Start tijd:</label>
+                <input asp-for="TuesdayStartTime" asp-format="{0:HH:mm}" type="time" />
+                <label asp-for="TuesdayEndTime">Eind tijd:</label>
+                <input asp-for="TuesdayEndTime" asp-format="{0:HH:mm}" type="time" />
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <div class="col-sm-12 p-0">
+                <label asp-for="Wednesday">Woensdag:</label>
+                <input asp-for="Wednesday" class="day" onchange="CheckInputState(this)" />
+            </div>
+            <div class="col-sm-12 p-0">
+                <label asp-for="WednesdayStartTime">Start tijd:</label>
+                <input asp-for="WednesdayStartTime" asp-format="{0:HH:mm}" type="time" />
+                <label asp-for="WednesdayEndTime">Eind tijd:</label>
+                <input asp-for="WednesdayEndTime" asp-format="{0:HH:mm}" type="time" />
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <div class="col-sm-12 p-0">
+                <label asp-for="Thursday">Donderdag:</label>
+                <input asp-for="Thursday" class="day" onchange="CheckInputState(this)" />
+            </div>
+            <div class="col-sm-12 p-0">
+                <label asp-for="ThursdayStartTime">Start tijd:</label>
+                <input asp-for="ThursdayStartTime" asp-format="{0:HH:mm}" type="time" />
+                <label asp-for="ThursdayEndTime">Eind tijd:</label>
+                <input asp-for="ThursdayEndTime" asp-format="{0:HH:mm}" type="time" />
+            </div>
+        </div>
+        <div class="form-group row mb-3 day">
+            <div class="col-sm-12 p-0">
+                <label asp-for="Friday">Vrijdag:</label>
+                <input asp-for="Friday" class="day" onchange="CheckInputState(this)" />
+            </div>
+            <div class="col-sm-12 p-0">
+                <label asp-for="FridayStartTime">Start tijd:</label>
+                <input asp-for="FridayStartTime" asp-format="{0:HH:mm}" type="time" />
+                <label asp-for="FridayEndTime">Eind tijd:</label>
+                <input asp-for="FridayEndTime" asp-format="{0:HH:mm}" type="time" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary ml-auto">Wijzig</button>
+        </div>
+    </form>
+</div>
+
+@section scripts {
+    <script>
+        window.onload = function () {
+            AvailabilityOnLoad();
+        };
+    </script>
+}

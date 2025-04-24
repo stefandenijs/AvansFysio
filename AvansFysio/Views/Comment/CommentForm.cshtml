@@ -1,0 +1,24 @@
+﻿@model AvansFysio.Models.Comments.NewCommentsViewModel
+
+@{
+    ViewData["Title"] = "Opmerking plaatsen";
+}
+
+<div class="container-fluid row">
+    <form asp-action="CommentForm" asp-controller="Comment" method="post" class="content-block mx-auto col-sm-auto">
+        <h2>Gegevens</h2>
+        <input type="hidden" asp-for="PatientId" />
+
+        <label asp-for="Comment">Inhoud opmerking:</label><br />
+        <span asp-validation-for="Comment"></span>
+        <textarea asp-for="Comment" type="a" class="form-control" placeholder="Inhoud opmerking" cols="50"></textarea>
+
+        <span asp-validation-for="Visible"></span>
+        <input asp-for="Visible" />
+        <label asp-for="Visible">Zichtbaar voor patiënt?</label><br />
+
+        <div class="form-group row">
+            <button class="btn btn-primary ml-auto" type="submit">Plaats opmerking</button>
+        </div>
+    </form>
+</div>

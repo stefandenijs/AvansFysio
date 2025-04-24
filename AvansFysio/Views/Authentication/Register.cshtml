@@ -1,0 +1,34 @@
+﻿@model AvansFysio.Models.Authentication.RegisterModel
+@{
+    ViewData["Title"] = "Registratie";
+    Layout = "_LayoutNoNav";
+}
+
+<div class="col-sm-3">
+    <partial name="_AuthLogo"/>
+    <div class="content-block container bg-light p-4">
+        <h1>@ViewBag.Title</h1>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Register" method="post">
+            <div class="form-group">
+                <label asp-for="Email">Email*: </label><br />
+                <span asp-validation-for="Email"></span>
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Wachtwoord: </label><br />
+                <span asp-validation-for="Password"></span>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Wachtwoord" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmedPassword">Bevestig wachtwoord: </label><br />
+                <span asp-validation-for="ConfirmedPassword"></span>
+                <input asp-for="ConfirmedPassword" type="password" class="form-control" placeholder="Bevestig wachtwoord" />
+            </div>
+            <p>* Het email moet overeenkomen met het gegeven email op het intake gesprek.</p>
+            <div class="text-right">
+                <button class="btn btn-primary">Registreer</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@model AvansFysio.Models.Authentication.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutNoNav";
+}
+<div class="col-sm-3">
+    <partial name="_AuthLogo"/>
+    <div class="content-block container bg-light">
+        <h1>@ViewBag.Title</h1>
+        <form asp-action="Login" method="post">
+            <div class="form-group">
+                <label asp-for="Email">Email: </label><br/>
+                <span asp-validation-for="Email"></span>
+                <input asp-for="Email" class="form-control" placeholder="Email"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Wachtwoord: </label><br/>
+                <span asp-validation-for="Password"></span>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Wachtwoord"/>
+            </div>
+            <p>Nog geen account? <a asp-action="Register" asp-controller="Authentication">Regristreer hier.</a></p>
+            <div class="text-right">
+                <button class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,158 @@
+﻿@model AvansFysio.Models.Patients.PatientsViewModel
+
+@{
+    ViewData["Title"] = $"Patiëntendossier {@Model.Name}";
+}
+
+<div class="container-fluid">
+    @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+    {
+        @if (@Model.PatientRecord != null)
+        {
+    <div class="row mb-3">
+        <a asp-action="UpdatePatientForm" asp-controller="Patient" asp-route-id="@Model.PatientId" class="btn btn-primary">Wijzig patiënt info</a>
+        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+        {
+            <a asp-action="UpdatePatientRecordForm" asp-controller="Patient" asp-route-id="@Model.PatientId" class="btn btn-primary ml-2">Bewerk patiëntendossier</a>
+            <a asp-action="AppointmentWorkerForm" asp-controller="Appointment" asp-route-id="@Model.PatientRecord.HeadPractitionerId" asp-route-patientId="@Model.PatientId" class="btn btn-primary ml-2">Maak afspraak</a>
+        }
+        else if (User.HasClaim(c => c.Type == "Claim.Intern"))
+        {
+            <a asp-action="AppointmentPatientForm" asp-controller="Appointment" asp-route-id="@Model.PatientId" class="btn btn-primary ml-2">Maak afspraak</a>
+        }
+    </div>
+        }
+    }
+    <div class="content-block row">
+        @if (@Model.PatientRecord == null)
+        {
+            <div>
+                <h2>@($"Patiënt {@Model.Name} heeft geen patiëntendossier")</h2>
+                @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+                {
+                    <a asp-action="PatientRecordForm" asp-controller="Patient" asp-route-id="@Model.PatientId" class="btn btn-primary">Voeg patiëntendossier toe</a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-4 pl-0 pr-3">
+                            <img alt="Foto patiënt" src="@Model.ImageSource" class="patient-photo" />
+                        </div>
+                        <div class="col-sm-auto">
+                            <h2>Algemeen</h2>
+                            <div class="row no-gutters">
+                                <div class="col-sm-auto p-0">
+                                    <p class="m-0"><strong>Naam:</strong></p>
+                                    <p>@Model.Name</p>
+                                    <p class="m-0"><strong>Leeftijd:</strong></p>
+                                    <p>@Model.PatientRecord.Age</p>
+                                    <p class="m-0"><strong>Geboortedatum:</strong></p>
+                                    <p>@($"{Model.BirthDate:dd-MM-yyyy}")</p>
+                                    <p class="m-0"><strong>Geslacht:</strong></p>
+                                    <p>@Model.Gender</p>
+                                </div>
+                                <div class="col-sm-auto pl-5">
+                                    <p class="m-0"><strong>Email:</strong></p>
+                                    <p>@Model.Email</p>
+                                    <p class="m-0"><strong>Telefoonnummer:</strong></p>
+                                    <p>@Model.PhoneNumber</p>
+                                    <p class="m-0"><strong>Rol:</strong></p>
+                                    <p>@Model.Role</p>
+                                    <p class="m-0"><strong>Identificatienummer:</strong></p>
+                                    <p>@Model.IdentificationNumber</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <h2>Diagnose</h2>
+                    <div class="row no-gutters">
+                        <div class="col-sm-auto">
+                            <p><strong>Code:</strong></p>
+                            <p>@Model.PatientRecord.DiagnosticCode</p>
+                            <p><strong>Diagnose:</strong></p>
+                            <p>@Model.PatientRecord.DiagnoseDescription</p>
+                        </div>
+                        <div class="col-sm-auto">
+                            <p><strong>Omschrijving klachten:</strong></p>
+                            <p>@Model.PatientRecord.MedicalComplaintsDescription</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="row">
+                        <h2>Opmerkingen</h2>
+                        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+                        {
+                            <a class="btn btn-primary ml-auto" asp-action="CommentForm" asp-controller="Comment" asp-route-id="@Model.PatientId">Plaats opmerking</a>
+                        }
+                    </div>
+                    <div>
+                        <vc:comments patient-record-id="@Model.PatientRecord.PatientRecordId"></vc:comments>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div>
+                    <h2>Behandelplan</h2>
+                    <div class="row no-gutters">
+                        <div class="col-sm-auto">
+                            <p><strong>Sessies per week:</strong></p>
+                            <p>@Model.PatientRecord.SessionsPerWeek sessies</p>
+                        </div>
+                        <div class="col-sm-auto pl-5">
+                            <p><strong>Sessieduratie:</strong></p>
+                            <p>@Model.PatientRecord.SessionsDuration minuten</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <h2>Praktijk informatie</h2>
+                    <div class="row no-gutters">
+                        <div class="col-sm-auto">
+                            <div>
+                                <p><strong>Hoofdbehandelaar:</strong></p>
+                                <p>@Model.PatientRecord.HeadPractitioner</p>
+                            </div>
+                            <div>
+                                <p><strong>Intakebehandelaar:</strong></p>
+                                <p>@Model.PatientRecord.IntakeHandler</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-auto pl-5">
+                            <div class="row no-gutters">
+                                <div class="col-sm-auto">
+                                    <p><strong>Datum van aanmelding:</strong></p>
+                                    <p>@($"{Model.PatientRecord.DateOfRegistration:dd-MM-yyyy}")</p>
+                                </div>
+                                <div class="col-sm-auto pl-5">
+                                    <p><strong>Datum van afmelding:</strong></p>
+                                    <p>@($"{Model.PatientRecord.DateOfDismissal:dd-MM-yyyy}")</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p><strong>Onder supervisie van:</strong></p>
+                                <p>@Model.PatientRecord.IntakeSupervisor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="row p-0 col-sm-12">
+                        <h2>Behandelingen</h2>
+                        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+                        {
+                            <a class="btn btn-primary ml-auto" asp-action="TreatmentForm" asp-controller="Treatment" asp-route-id="@Model.PatientId">Voeg behandeling toe</a>
+                        }
+                        <vc:treatments patient-record-id="@Model.PatientRecord.PatientRecordId"></vc:treatments>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@using Core.Domain.People
+@model AvansFysio.Models.Patients.NewPatientViewModel
+
+@{
+    ViewData["Title"] = "Patiënten formulier";
+}
+<div class="container-fluid">
+    <form asp-action="PatientForm" asp-controller="Patient" method="post" class="content-block m-auto col-sm-8" enctype="multipart/form-data">
+        <h2>Gegevens</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="Name">Naam:</label><br />
+                    <span asp-validation-for="Name"></span>
+                    <input asp-for="Name" class="form-control" placeholder="Naam" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthDate">Geboortedatum:</label><br />
+                    <span asp-validation-for="BirthDate"></span>
+                    <input asp-for="BirthDate" type="date" asp-format="0:dd-MM-yyyy" class="form-control" placeholder="Geboortedatum" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender">Geslacht:</label><br />
+                    <span asp-validation-for="Gender"></span>
+                    <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control ">
+                        <option selected="selected" value="">Kies geslacht</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Photo">Foto:</label><br />
+                    <span asp-validation-for="Photo"></span>
+                    <input asp-for="Photo" class="form-control-file" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="Email">Email:</label><br />
+                    <span asp-validation-for="Email"></span>
+                    <input asp-for="Email" class="form-control" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber">Telefoonnummer:</label><br />
+                    <span asp-validation-for="PhoneNumber"></span>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Telefoonnummer" />
+                </div>
+                <div class="form-group">
+                    <label>Rol:</label><br />
+                    <span asp-validation-for="Role"></span>
+                    <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-control">
+                        <option selected="selected" value="">Kies rol</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentificationNumber">Identificatienummer:</label><br />
+                    <span asp-validation-for="IdentificationNumber"></span>
+                    <input asp-for="IdentificationNumber" class="form-control" placeholder="Identificatienummer" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <button class="btn btn-primary ml-auto">Voeg patiënt toe</button>
+        </div>
+    </form>
+</div>

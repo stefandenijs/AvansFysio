@@ -1,0 +1,18 @@
+﻿@using System.Globalization
+@model AvansFysio.Models.Availability.AvailabilitiesViewModel
+
+<div class="row">
+    <div class="col-sm-4 pl-0">
+        <p>@Model.DayOfWeek</p>
+    </div>
+    <div class="col-sm-8 pr-0">
+        @if (@Model.Available)
+        {
+            <p>@($"{Model.StartTime?.ToShortTimeString()}-{Model.EndTime?.ToShortTimeString()}")</p>
+        }
+        else
+        {
+            <p>Niet beschikbaar.</p>
+        }
+    </div>
+</div>

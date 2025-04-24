@@ -1,0 +1,86 @@
+﻿@using System.Reflection.Metadata.Ecma335
+@model AvansFysio.Models.Appointments.AppointmentsViewModel
+
+
+
+@if (Model.StartTime < DateTime.Now)
+{
+    <tr id="OldAppointment">
+        <td>@($"{Model.StartTime:dd-MM-yyyy}")</td>
+        <td>
+            <p class="mb-1">@Model.StartTime.ToShortTimeString()</p>
+            <p class="mb-1">@Model.EndTime.ToShortTimeString()</p>
+        </td>
+        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+        {
+            <td>@Model.Patient</td>
+        }
+        else
+        {
+            <td>@Model.Practitioner</td>
+        }
+        @if (Model.Treatment == null)
+        {
+            <td>Geen behandeling gevonden</td>
+        }
+        else
+        {
+            <td class="appointment-treatment">@Model.Treatment</td>
+        }
+        <td>
+            @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+            {
+                <a class="btn btn-primary" asp-action="Details" asp-controller="Patient" asp-route-id="@Model.PatientId">Patiënt Details</a>
+            }
+            @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern") && Model.Treatment == null)
+            {
+                <a class="btn btn-primary" asp-action="TreatmentForm" asp-controller="Treatment" asp-route-id="@Model.PatientId" asp-route-appointmentId="@Model.Id">Voeg behandeling toe</a>
+            }
+        </td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td>@($"{Model.StartTime:dd-MM-yyyy}")</td>
+        <td>
+            <p class="mb-1">@Model.StartTime.ToShortTimeString()</p>
+            <p class="mb-1">@Model.EndTime.ToShortTimeString()</p>
+        </td>
+        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+        {
+            <td>@Model.Patient</td>
+        }
+        else
+        {
+            <td>@Model.Practitioner</td>
+        }
+        @if (Model.Treatment == null)
+        {
+            <td>Geen behandeling gevonden</td>
+        }
+        else
+        {
+            <td class="appointment-treatment">@Model.Treatment</td>
+        }
+        <td>
+            @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+            {
+                <a class="btn btn-primary" asp-action="Details" asp-controller="Patient" asp-route-id="@Model.PatientId">Patiënt Details</a>
+            }
+            @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+            {
+                <a class="btn btn-primary" asp-action="UpdateAppointmentWorkerForm" asp-controller="Appointment" asp-route-id="@Model.Id">Wijzig Afspraak</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" asp-action="UpdateAppointmentPatientForm" asp-controller="Appointment" asp-route-id="@Model.Id">Wijzig Afspraak</a>
+            }
+            <button class="btn btn-primary" onclick="CancelAppointment(this, '@Url.Action("CancelAppointment", "Appointment")', @Model.Id)">Annuleer afspraak</button>
+            @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern") && Model.Treatment == null)
+            {
+                <a class="btn btn-primary mt-1" asp-action="TreatmentForm" asp-controller="Treatment"  asp-route-id="@Model.PatientId" asp-route-appointmentId="@Model.Id">Voeg behandeling toe</a>
+            }
+        </td>
+    </tr>
+}

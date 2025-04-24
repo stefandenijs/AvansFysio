@@ -1,0 +1,15 @@
+﻿@model List<AvansFysio.Models.Patients.PatientsViewModel>
+
+@if (@Model.Count == 0)
+{
+    <p>Geen patiënten gevonden.</p>
+}
+else
+{
+    <div class="content-list">
+        @foreach (var patient in @Model)
+        {
+            <partial name="_SmallPatientWindow" model="patient" />
+        }
+    </div>
+}

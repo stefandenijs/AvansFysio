@@ -1,0 +1,8 @@
+﻿@model AvansFysio.Models.Patients.NewPatientRecordsViewModel
+
+<div id="Supervisor" class="form-group">
+    <label asp-for="IntakeSupervisorId">Toezichthouder intake*:</label><br />
+    <span id="SupervisorSpan" asp-validation-for="IntakeSupervisorId"></span>
+    <select id="SupervisorSelect" asp-for="IntakeSupervisorId" asp-items="@ViewBag.Physiotherapists" onchange="CheckValue(this.value)" class="form-control input-validation-error" placeholder="Toezichthouder intake"></select>
+    <p id="SupervisorInfo" class="val-error-text">* Bij een student moet een toezichthouder gekozen worden.</p>
+</div>

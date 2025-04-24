@@ -1,0 +1,86 @@
+﻿@model AvansFysio.Models.Workers.WorkersViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="col-sm-4 pr-2">
+            <div class="content-block">
+                <h2>Mijn details</h2>
+                @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+                {
+                    <vc:physio-details worker-id="@Model.Id">
+                    </vc:physio-details>
+                }
+                else if (User.HasClaim(c => c.Type == "Claim.Intern"))
+                {
+                    <vc:intern-details worker-id="@Model.Id">
+                    </vc:intern-details>
+                }
+                else
+                {
+                    <p>Geen gegevens gevonden bij gebruiker.</p>
+                }
+            </div>
+        </div>
+        <div class="col-sm-4 px-2">
+            <div class="content-block">
+                <h2>Mijn volgende afspraak</h2>
+                <vc:next-appointment person-id="@Model.Id">
+                </vc:next-appointment>
+            </div>
+        </div>
+        <div class="col-sm-4 pl-2">
+            <div class="content-block">
+                <div>
+                    <h2>Beschikbaarheid</h2>
+                    <vc:availabilities worker-id="@Model.Id">
+                    </vc:availabilities>
+                    <div class="row">
+                        <a asp-action="AvailabilityForm" asp-controller="Availability" class="btn btn-primary ml-auto">Wijzig</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters mt-3">
+        <div class="col-sm-6 pr-2">
+            <div class="content-block">
+                <div class="row">
+                    <h2>Mijn Afspraken</h2>
+                    @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+                    {
+                        <a asp-action="AppointmentWorkerForm" asp-controller="Appointment" asp-route-id="@Model.Id" class="btn btn-primary ml-auto">Maak afspraak</a>
+                    }
+                </div>
+                <div class="custom-view">
+                    <vc:appointments person-Id="@Model.Id">
+                    </vc:appointments>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 pl-2">
+            <div class="content-block">
+                @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+                {
+                    <h2>Mijn patiënten</h2>
+                    <div class="custom-view">
+                        <vc:personal-patients worker-Id="@Model.Id">
+                        </vc:personal-patients>
+                    </div>
+                }
+                else
+                {
+                    <h2>Mijn behandelingen</h2>
+                    <div class="custom-view">
+                        <vc:intern-treatments worker-Id="@Model.Id">
+                        </vc:intern-treatments>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

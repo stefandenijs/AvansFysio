@@ -1,0 +1,32 @@
+﻿@model List<AvansFysio.Models.Patients.PatientsViewModel>
+@{
+    ViewData["Title"] = "Patiëntenlijst";
+}
+<div class="container-fluid">
+    <div class="row mb-2">
+        @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+        {
+            <a asp-action="PatientForm" asp-controller="Patient" class="btn mb-3">Voeg een patiënt toe</a>
+        }
+        <input class="filter ml-auto" type="text" onkeyup="FilterPatients(this.value)" placeholder="Zoek" />
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Patiëntnummer</th>
+                <th>Naam</th>
+                <th>Geboortedatum</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Identificatienummer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in @Model)
+            {
+                <partial model="patient" name="_PatientRow" />
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,42 @@
+﻿@model AvansFysio.Models.Appointments.AppointmentsViewModel
+
+@if (Model == null)
+{
+    <p>Geen eerst volgende afspraak gevonden.</p>
+}
+else
+{
+    <div>
+        <div class="row no-gutters">
+            <div class="col-sm-6">
+                <p><strong>Datum:</strong></p>
+                <p>@Model.StartTime.ToShortDateString()</p>
+                <p><strong>Tijd:</strong></p>
+                <p>@($"{Model.StartTime.ToShortTimeString()}-{Model.EndTime.ToShortTimeString()}")</p>
+            </div>
+            <div class="col-sm-6">
+                @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist" || c.Type == "Claim.Intern"))
+                {
+                    <p><strong>Patiënt:</strong></p>
+                    <p>@Model.Patient</p>
+                }
+                else
+                {
+                    <p><strong>Behandelaar:</strong></p>
+                    <p>@Model.Practitioner</p>
+                }
+            </div>
+        </div>
+        <div class="row justify-content-end mt-4 p-0">
+            @if (User.HasClaim(c => c.Type == "Claim.Physiotherapist"))
+            {
+                <a class="btn btn-primary" asp-action="Details" asp-controller="Patient" asp-route-id="@Model.PatientId">Patiënt Details</a>
+                <a class="btn btn-primary ml-2" asp-action="UpdateAppointmentWorkerForm" asp-controller="Appointment" asp-route-id="@Model.Id">Wijzig Afspraak</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" asp-action="UpdateAppointmentPatientForm" asp-controller="Appointment" asp-route-id="@Model.Id">Wijzig Afspraak</a>
+            }
+        </div>
+    </div>
+}

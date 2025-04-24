@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Infrastructure.Webservice": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "JWT_Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZC5tIiwianRpIjoiNGMzN2JmMDAtMjk2Zi00ZjUzLWJhMjktMGIxNzhlYjhlYmYxIiwiZXhwIjoxNjQwNTU4MzY4LCJpc3MiOiJodHRwczovL2F2YW5zZnlzaW90aGVyYXB5YXBpLmF6dXJld2Vic2l0ZXMubmV0IiwiYXVkIjoiaHR0cHM6Ly9hdmFuc2Z5c2lvdGhlcmFweWFwaS5henVyZXdlYnNpdGVzLm5ldCJ9.vl_Ek1vDuP9RaXwK-Rw5oQtLmwlgtfeaZgMxzfNgO8o"
+      }
+    }
+  }
+}

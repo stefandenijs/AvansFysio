@@ -1,0 +1,11 @@
+﻿@model AvansFysio.Models.Patients.PatientsViewModel
+
+<div class="row no-gutters view-row">
+    <div class="col-sm-6">
+        <p>@Model.Name</p>
+        <p>@Model.Email</p>
+    </div>
+    <div class="col-sm-6 text-right">
+        <a class="btn btn-primary" asp-action="Details" asp-controller="Patient" asp-route-id="@Model.PatientId">Details</a>
+    </div>
+</div>
